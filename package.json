@@ -1,0 +1,13 @@
+{
+  "name": "hearo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/carlosmaniero/hearo",
+  "author": "Maniero <cmaniero@thoughtworks.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^26.4.2",
+    "ts-jest": "^26.4.1",
+    "typescript": "^4.0.3"
+  }
+}
