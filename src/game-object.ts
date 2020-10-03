@@ -1,5 +1,18 @@
 import {GameAction} from "./game-action";
 
+export class PauseAction extends GameAction {
+}
+
+export class StartAction extends GameAction {
+}
+
+export class CompletedAction extends GameAction {
+  constructor(readonly object: GameObject) {
+    super();
+  }
+}
+
+
 export abstract class GameObject {
   protected gameControl: GameControl | null = null;
 
@@ -23,7 +36,80 @@ export abstract class GameObject {
     this.disconnect(gameControl);
   }
 
+  protected dispatch(action: GameAction) {
+    if (!this.gameControl) {
+      return;
+    }
+    this.gameControl.dispatch(action)
+  }
+
   abstract on(action: GameAction): void;
+}
+
+export abstract class GameObjectAsync extends GameObject {
+  started = false;
+  running = false;
+  private runningPromise: Promise<void>;
+
+  on(action: GameAction): void {
+    if (action.is(StartAction)) {
+      this.start();
+      this.resume();
+    }
+
+    if (action.is(PauseAction)) {
+      this.pause();
+    }
+
+    if (action.is(CompletedAction) && action.object === this) {
+      this.gameControl.disconnect(this);
+    }
+  }
+
+  private pause() {
+    if (!this.running) {
+      return;
+    }
+
+    this.running = false;
+    this.onPause();
+  }
+
+  start() {
+    if (this.started) {
+      return;
+    }
+
+    this.started = true;
+    this.running = true;
+
+    this._internal_listen_to_promise(this.onStart());
+  }
+
+  resume() {
+    if (!this.started || this.running) {
+      return;
+    }
+
+    this.started = true;
+    this.running = true;
+
+    this._internal_listen_to_promise(this.onResume());
+  }
+
+  private _internal_listen_to_promise(promise: Promise<void>) {
+    this.runningPromise = promise;
+
+    promise.then(() => {
+      if (promise === this.runningPromise) {
+        this.dispatch(new CompletedAction(this));
+      }
+    });
+  }
+
+  abstract onStart(): Promise<void>
+  abstract onPause(): void
+  abstract onResume(): Promise<void>
 }
 
 export class GameControl {
