@@ -6,11 +6,21 @@
   "author": "Maniero <cmaniero@thoughtworks.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:demo": "webpack-dev-server --config webpack.config.js"
   },
   "devDependencies": {
+    "error-overlay-webpack-plugin": "^0.4.1",
+    "html-webpack-plugin": "^4.5.0",
     "jest": "^26.4.2",
+    "module-alias": "^2.2.2",
     "ts-jest": "^26.4.1",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.3",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "ts-loader": "^8.0.4"
   }
 }

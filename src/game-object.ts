@@ -49,7 +49,7 @@ export abstract class GameObject {
 export abstract class GameObjectAsync extends GameObject {
   started = false;
   running = false;
-  private runningPromise: Promise<void>;
+  private runningPromise?: Promise<void>;
 
   on(action: GameAction): void {
     if (action.is(StartAction)) {
@@ -62,11 +62,11 @@ export abstract class GameObjectAsync extends GameObject {
     }
 
     if (action.is(CompletedAction) && action.object === this) {
-      this.gameControl.disconnect(this);
+      this.gameControl?.disconnect(this);
     }
   }
 
-  private pause() {
+  pause() {
     if (!this.running) {
       return;
     }

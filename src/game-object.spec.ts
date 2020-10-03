@@ -73,11 +73,11 @@ describe('Game', () => {
 
   describe('GameAsyncObject', () => {
     class GameObjectAsyncTest extends GameObjectAsync {
-      resolveStart!: (value?: unknown) => void;
-      rejectStart!: (reason?: any) => void;
+      resolveStart!: any;
+      rejectStart!: any;
       readonly startPromise: Promise<void>;
-      resolveResume!: (value?: unknown) => void;
-      rejectResume!: (reason?: any) => void;
+      resolveResume!: any;
+      rejectResume!: any;
       readonly resumePromise: Promise<void>;
 
       onStart = jest.fn(() => this.startPromise);

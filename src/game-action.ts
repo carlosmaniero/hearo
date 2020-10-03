@@ -1,5 +1,5 @@
 type ActionConstructor<GameActionType extends GameAction> = {
-  new(...args: unknown[]): GameActionType
+  new(...args: any[]): GameActionType
 };
 
 export abstract class GameAction {
