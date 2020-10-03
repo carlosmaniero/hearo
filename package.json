@@ -5,6 +5,9 @@
   "repository": "https://github.com/carlosmaniero/hearo",
   "author": "Maniero <cmaniero@thoughtworks.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
   "devDependencies": {
     "jest": "^26.4.2",
     "ts-jest": "^26.4.1",
